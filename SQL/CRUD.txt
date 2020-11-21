@@ -1,0 +1,18 @@
+INSERT INTO
+	CONTATOS(NOME, TELEFONE, ENDERECO, DATA_CADASTRO)
+VALUES
+	(?, ?, ?, ?);
+_________________________________________________________________
+DELETE FROM CONTATOS WHERE ID < ?;
+_________________________________________________________________
+UPDATE 
+	CONTATOS
+SET
+    NOME 	= ?,  
+    TELEFONE 	= ?,	 
+    ENDERECO 	= ?
+WHERE
+	ID = ?;
+__________________________________________________________________
+SELECT * FROM CONTATOS;
+__________________________________________________________________

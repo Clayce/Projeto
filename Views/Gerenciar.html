@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+    
+        <title>GERENCIAR</title>
+
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    </head>
+    <body>
+        
+        <div class="container">
+            
+            <br>
+
+            <div class="row">
+                <div class="col-sm-12 ">
+
+                    <a class="btn btn-default" href="../Controller/RouterConfig.php">&larr; VOLTAR AO MENU</a>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 ">
+
+                    <h2 class="text-center text-primary">CONTATOS CADASTRADOS</h2>
+
+                </div>
+            </div>
+
+            <br><br>
+
+            <div class="row">
+                <div class="col-sm-12 ">
+ 
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead> <!-- cabeçalho da tabela -->
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nome</th>
+                                    <th>Telefone</th>
+                                    <th>Endereço</th>
+                                    <th>Data de Cadastro</th>
+                                    <th></th> 
+                                </tr>
+                            </thead>
+                            <tbody id="CorpoTabela"> <!-- corpo da tabela -->
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                    
+
+                </div>
+            </div>
+
+
+
+        </div>
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </body>
+</html>
+
+<script>
+    
+    $.post("../Controller/RouterConfig.php?Controller=ContatoController&Funcao=Listar",
+    {
+
+    },
+
+    function(retornoListar)
+    {
+        retornoListar = JSON.parse(retornoListar);
+
+        for(var i=0;i<retornoListar.length;i++) 
+        {
+            $("#CorpoTabela").append
+            (
+                "<tr>" +
+                    "<td>"+retornoListar[i].ID+"</td>"+
+                    "<td>"+retornoListar[i].NOME+"</td>"+
+                    "<td>"+retornoListar[i].TELEFONE+"</td>"+
+                    "<td>"+retornoListar[i].ENDERECO+"</td>"+
+                    "<td>"+retornoListar[i].DATA_CADASTRO+"</td>"+
+                    "<td>" +
+                        "<button class='btn btn-danger' onclick='Excluir("+retornoListar[i].ID+")'>Excluir</button>"+
+                    "</td>" +
+
+                "</tr>"
+            );
+        } 
+    }
+    );
+
+    function Excluir(Id)
+    {
+        resposta = confirm("Deseja realmente excluir?"); 
+
+        if(resposta)
+        {
+            $.post(
+                "../Controller/RouterConfig.php?Controller=ContatoController&Funcao=Excluir",
+                {
+                    Id: Id
+                },
+                function (retorno)
+                {
+                    if(retorno>0)
+                    {
+                        alert("Ok!");
+                        location.reload();
+                    }
+                    else
+                    {
+                        alert("Erro. Consulte o suporte.");
+                    }
+                }
+            );
+        }
+
+    }
+
+</script>
